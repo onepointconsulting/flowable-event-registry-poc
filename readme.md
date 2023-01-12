@@ -300,7 +300,7 @@ So finally we define a BPMN process.
           <sequenceFlow id="sid-1A06C9DA-6918-4871-9805-942DC4E15AC7" sourceRef="changeCustomerData" targetRef="sid-28848843-5EE0-41CA-88A4-E4985484E48D"></sequenceFlow>
       </process>
 
-### Important REST Interfaces 
+### Important Flowable REST Interfaces 
 
 We have used a set of Flowable REST interfaces to interact with the Flowable engine. Here are the most relevant ones:
 
@@ -335,5 +335,21 @@ We have used a set of Flowable REST interfaces to interact with the Flowable eng
 - View historic task instances
 
   GET http://localhost:8090/flowable/process-api/history/historic-task-instances/@task-id@/form
+
+#### How to Explore the REST Interfaces
+
+The Flowable API is quite extensive and so we used the Spring Boot Actuator package to explore the API's. The Maven
+dependency is this one:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
+You get access to the REST API mappings in the application via:
+
+http://localhost:8090/flowable/actuator/mappings
 
 
