@@ -2,15 +2,17 @@ Extended Flowable Event Registry Demo
 =====================================
 
 This project is a Spring Boot which contains an implementation of a simple Flowable 6.8.0 event registry process.
-It demonstrates how you can listen to events, change the event data with a user action and 
-send the changed data to another Kafka topic. We have used Kafka for this project.
+It demonstrates how you can listen to events from a [Kafka](https://kafka.apache.org/) topic, change the event data 
+with a user action and send the changed data to another [Kafka](https://kafka.apache.org/) topic. 
+We have focused on [Kafka](https://kafka.apache.org/) in this project.
 
 ![alt Event Process](src/main/resources/static/images/diagram-event-test.png "Event Process")
 
 We have used the Open Source version of Flowable UI to generate the forms and diagrammes 
 which we downloaded from [here](https://www.flowable.com/open-source-download).
 
-In this project we are also using the Flowable REST API's which allow to render and submit the user task form data.
+In this project we are also using the Open Source [Flowable REST API's](https://www.flowable.com/open-source/docs/bpmn/ch15-REST) 
+which allow to render and submit the user task form data.
 
 **Notes**
   - This is my first Flowable project, so there might be some bad practices in place. If you find some problem,
