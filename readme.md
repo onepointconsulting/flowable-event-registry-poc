@@ -5,7 +5,7 @@ This project is a Spring Boot which contains an implementation of a simple Flowa
 It demonstrates how you can listen to events, change the event data with a user action and 
 send the changed data to another Kafka topic. We have used Kafka for this project.
 
-![alt Event Process](src/main/resources/static/images/diagram-event-test.png "Event Proces")
+![alt Event Process](src/main/resources/static/images/diagram-event-test.png "Event Process")
 
 We have used the Open Source version of Flowable UI to generate the forms and diagrammes 
 which we downloaded from [here](https://www.flowable.com/open-source-download).
@@ -20,9 +20,15 @@ In this project we are also using the Flowable REST API's which allow to render 
 Prerequisites
 -------------
 
+- Use a `Java 11 JDK` or later (we have used Java 18)
+- Install `Maven` (we have used Maven 3.8.3)
 - A Kafka installation on localhost
-- Some sort of Kafka client. I have used a Docker image of Kafka UI: [provectuslabs/kafka-ui:latest](https://github.com/provectus/kafka-ui) 
-which I ran in a Docker container 
+
+Nice to Have
+------------
+
+- Some sort of Kafka client. I have used a Docker image of Kafka UI: [provectuslabs/kafka-ui:latest](https://github.com/provectus/kafka-ui)
+  which I ran in a Docker container
 
 Example Use Case
 ----------------
@@ -177,6 +183,10 @@ following fields:
 
 The form definition is contained in [this file](src/main/resources/forms/customerDetails.form).
 
+This is how the form looks in the designer:
+
+![alt Form Designer](src/main/resources/static/images/dashboard_form_designer_screenshot.png "Form Designer")
+
 ### Outbound Channel
 
 The outbound channel is defined to send messages to a specific Kafka topic.
@@ -237,6 +247,8 @@ This the event definition:
 ### Process
 
 So finally we define a BPMN process.
+
+![alt Event Process](src/main/resources/static/images/diagram-event-test.png "Event Proces")
 
 - The **startEvent** refers to our event type `myEvent`
 - We define two mappings from event payload to business process variable:
