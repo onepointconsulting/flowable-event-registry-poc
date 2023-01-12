@@ -14,6 +14,8 @@ which we downloaded from [here](https://www.flowable.com/open-source-download).
 In this project we are also using the Open Source [Flowable REST API's](https://www.flowable.com/open-source/docs/bpmn/ch15-REST) 
 which allow to render and submit the user task form data.
 
+And we also created a small dashboard and a simplistic Flowable form renderer using a couple of Vanilla Javascript functions. 
+
 **Notes**
   - This is my first Flowable project, so there might be some bad practices in place. If you find some problem,
   please let me know.
