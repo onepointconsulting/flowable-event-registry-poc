@@ -1,0 +1,51 @@
+server:
+  port: 8090
+  servlet:
+    context-path: '/flowable'
+
+spring:
+  application:
+    name: flowable-event-registry-demo
+    version: "@project.version@"
+
+    #datasource:
+    #url: jdbc:postgresql://127.0.0.1:5432/flowable
+    #username: flowable
+    #password: flowable
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  kafka:
+    consumer:
+      bootstrap-servers: PLAINTEXT://LAPTOP-GOVADSCB:9092
+      auto-offset-reset: earliest
+      group-id: flowable-event-registry-demo
+    producer:
+      bootstrap-servers: PLAINTEXT://LAPTOP-GOVADSCB:9092
+    listener:
+      missing-topics-fatal: false
+
+flowable:
+  eventregistry:
+    enabled: true
+    resource-location: "classpath*:/eventregistry/"
+  rest:
+    app:
+      admin:
+        user-id: rest-admin
+        password: test
+        first-name: Rest
+        last-name: Admin
+#    enable-change-detection: true
+logging:
+  level:
+    com.onepointltd: DEBUG
+#    org.flowable: DEBUG
+#    org.flowable.eventregistry: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

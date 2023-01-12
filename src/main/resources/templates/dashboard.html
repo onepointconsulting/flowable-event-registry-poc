@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Flowable Dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/css/skeleton.css}" rel="stylesheet"/>
+    <link th:href="@{/css/skeleton-alert.css}" rel="stylesheet"/>
+    <link th:href="@{/css/normalize.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/forms.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Status</h1>
+    <table class="u-full-width">
+        <thead>
+        <tr>
+            <th>
+                Parameter
+            </th>
+            <th>
+                Count
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                Case deployment
+            </td>
+            <td>
+                [[${data.caseDeploymentCount}]]
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Process deployment
+            </td>
+            <td>
+                [[${data.processDeploymentCount}]]
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Case instance
+            </td>
+            <td>
+                [[${data.caseInstanceCount}]]
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Process instance
+            </td>
+            <td>
+                [[${data.processInstanceCount}]]
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Task
+            </td>
+            <td>
+                [[${data.taskCount}]]
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="form_display"></div>
+    <div class="row" id="formMessage"></div>
+
+    <h1 th:if="${data.taskCount != 0}">Tasks</h1>
+    <table class="u-full-width" th:if="${data.taskCount != 0}">
+        <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Form Id
+            </th>
+        </tr>
+        </thead>
+        <tr th:each="task: ${data.taskList}">
+            <td th:text="${task.id}"/>
+            <td th:text="${task.name}"/>
+            <td th:text="${task.formId}"/>
+            <td>
+                <a target="_blank" th:data="${task.id}" th:href="@{/process-api/runtime/tasks/{taskId}/form(taskId=${task.id})}">Render form</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    attachListeners()
+</script>
+</body>
+</html>

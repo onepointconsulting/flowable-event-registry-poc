@@ -1,0 +1,56 @@
+{
+    "name": "Customer Details",
+    "key": "customerDetails",
+    "version": 0,
+    "fields": [
+        {
+            "fieldType": "FormField",
+            "id": "customerId",
+            "name": "Customer ID",
+            "type": "text",
+            "value": "${customerId}",
+            "required": false,
+            "readOnly": false,
+            "overrideId": false,
+            "placeholder": null,
+            "layout": null
+        },
+        {
+            "fieldType": "FormField",
+            "id": "customerName",
+            "name": "Customer Name",
+            "type": "text",
+            "value": null,
+            "required": false,
+            "readOnly": false,
+            "overrideId": true,
+            "placeholder": null,
+            "layout": null
+        },
+        {
+            "fieldType": "FormField",
+            "id": "amount",
+            "name": "Amount",
+            "type": "integer",
+            "value": null,
+            "required": false,
+            "readOnly": false,
+            "overrideId": false,
+            "placeholder": null,
+            "layout": null
+        },
+        {
+            "fieldType": "FormField",
+            "id": "remarks",
+            "name": "Remarks",
+            "type": "text",
+            "value": null,
+            "required": false,
+            "readOnly": false,
+            "overrideId": false,
+            "placeholder": null,
+            "layout": null
+        }
+    ],
+    "outcomes": []
+}

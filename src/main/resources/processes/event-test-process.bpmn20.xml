@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="Examples" exporter="Flowable Open Source Modeler" exporterVersion="6.8.0">
+    <process id="eventTest3" name="Process to test events 4" isExecutable="true">
+        <startEvent id="theStart" isInterrupting="true">
+            <extensionElements>
+                <flowable:eventType xmlns:flowable="http://flowable.org/bpmn"><![CDATA[myEvent]]></flowable:eventType>
+                <flowable:eventOutParameter xmlns:flowable="http://flowable.org/bpmn" source="customerName" sourceType="string" target="customerName"></flowable:eventOutParameter>
+                <flowable:eventOutParameter xmlns:flowable="http://flowable.org/bpmn" source="amount" sourceType="integer" target="amount"></flowable:eventOutParameter>
+                <flowable:eventOutParameter xmlns:flowable="http://flowable.org/bpmn" source="customerId" sourceType="string" target="customerId"></flowable:eventOutParameter>
+            </extensionElements>
+        </startEvent>
+        <sequenceFlow id="flow1" sourceRef="theStart" targetRef="theTask"></sequenceFlow>
+        <serviceTask id="theTask" name="log1" flowable:expression="#{Logger.log(execution, customerName, amount)}"></serviceTask>
+        <endEvent id="theEnd"></endEvent>
+        <serviceTask id="sendAndReceiveEventTask1" name="Send to Kafka" flowable:type="send-event">
+            <extensionElements>
+                <flowable:eventType><![CDATA[customerAnalysisEvent]]></flowable:eventType>
+                <flowable:eventInParameter sourceExpression="${customerName}" target="customerName" targetType="string"></flowable:eventInParameter>
+                <flowable:eventInParameter sourceExpression="${amount}" target="amount" targetType="integer"></flowable:eventInParameter>
+                <flowable:eventInParameter sourceExpression="${customerId}" target="customerId" targetType="string"></flowable:eventInParameter>
+                <flowable:eventInParameter sourceExpression="${remarks}" target="remarks" targetType="string"></flowable:eventInParameter>
+                <flowable:channelKey xmlns:flowable="http://flowable.org/bpmn"><![CDATA[customerOutboundChannel]]></flowable:channelKey>
+            </extensionElements>
+        </serviceTask>
+        <userTask id="changeCustomerData" name="Change customer data" flowable:formKey="customerDetails" flowable:formFieldValidation="true">
+            <extensionElements>
+                <flowable:formProperty id="customerId" name="Customer Id" type="string" expression="${customerId}" variable="customerId"></flowable:formProperty>
+                <flowable:formProperty id="customerName" name="Customer Name" type="string" expression="${customerName}" variable="customerName"></flowable:formProperty>
+                <flowable:formProperty id="amount" name="amount" type="string" expression="${amount}" variable="amount"></flowable:formProperty>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow2" sourceRef="theTask" targetRef="changeCustomerData"></sequenceFlow>
+        <serviceTask id="sid-28848843-5EE0-41CA-88A4-E4985484E48D" name="log2" flowable:expression="#{Logger.log(execution)}"></serviceTask>
+        <sequenceFlow id="sid-A62FD212-B007-475D-BCF1-00ECA0CB68BE" sourceRef="sendAndReceiveEventTask1" targetRef="theEnd"></sequenceFlow>
+        <sequenceFlow id="sid-4F3283B8-AA9D-4482-BF0C-2738206F67D5" sourceRef="sid-28848843-5EE0-41CA-88A4-E4985484E48D" targetRef="sendAndReceiveEventTask1"></sequenceFlow>
+        <sequenceFlow id="sid-1A06C9DA-6918-4871-9805-942DC4E15AC7" sourceRef="changeCustomerData" targetRef="sid-28848843-5EE0-41CA-88A4-E4985484E48D"></sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_eventTest3">
+        <bpmndi:BPMNPlane bpmnElement="eventTest3" id="BPMNPlane_eventTest3">
+            <bpmndi:BPMNShape bpmnElement="theStart" id="BPMNShape_theStart">
+                <omgdc:Bounds height="30.0" width="30.5" x="15.0" y="225.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="theTask" id="BPMNShape_theTask">
+                <omgdc:Bounds height="60.0" width="100.0" x="150.0" y="210.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="theEnd" id="BPMNShape_theEnd">
+                <omgdc:Bounds height="28.0" width="28.0" x="1020.0" y="226.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sendAndReceiveEventTask1" id="BPMNShape_sendAndReceiveEventTask1">
+                <omgdc:Bounds height="80.0" width="100.0" x="780.0" y="200.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="changeCustomerData" id="BPMNShape_changeCustomerData">
+                <omgdc:Bounds height="80.0" width="100.0" x="360.0" y="200.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-28848843-5EE0-41CA-88A4-E4985484E48D" id="BPMNShape_sid-28848843-5EE0-41CA-88A4-E4985484E48D">
+                <omgdc:Bounds height="60.0" width="100.0" x="570.0" y="210.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sid-4F3283B8-AA9D-4482-BF0C-2738206F67D5" id="BPMNEdge_sid-4F3283B8-AA9D-4482-BF0C-2738206F67D5" flowable:sourceDockerX="50.0" flowable:sourceDockerY="30.0" flowable:targetDockerX="1.0" flowable:targetDockerY="40.0">
+                <omgdi:waypoint x="669.9499999999999" y="240.0"></omgdi:waypoint>
+                <omgdi:waypoint x="779.9999999999197" y="240.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1" flowable:sourceDockerX="15.25" flowable:sourceDockerY="15.0" flowable:targetDockerX="50.0" flowable:targetDockerY="30.0">
+                <omgdi:waypoint x="45.449999333340934" y="240.0"></omgdi:waypoint>
+                <omgdi:waypoint x="150.0" y="240.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2" flowable:sourceDockerX="50.0" flowable:sourceDockerY="30.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+                <omgdi:waypoint x="249.95000000000002" y="240.0"></omgdi:waypoint>
+                <omgdi:waypoint x="359.99999999999704" y="240.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-A62FD212-B007-475D-BCF1-00ECA0CB68BE" id="BPMNEdge_sid-A62FD212-B007-475D-BCF1-00ECA0CB68BE" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
+                <omgdi:waypoint x="879.9499999998135" y="240.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1020.0" y="240.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-1A06C9DA-6918-4871-9805-942DC4E15AC7" id="BPMNEdge_sid-1A06C9DA-6918-4871-9805-942DC4E15AC7" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="1.0" flowable:targetDockerY="30.0">
+                <omgdi:waypoint x="459.94999999991825" y="240.0"></omgdi:waypoint>
+                <omgdi:waypoint x="569.9999999999197" y="240.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-9E4831BF-6E5E-4B64-B3E2-C89E20359C36" id="BPMNEdge_sid-9E4831BF-6E5E-4B64-B3E2-C89E20359C36" flowable:sourceDockerX="15.0" flowable:sourceDockerY="15.0" flowable:targetDockerX="50.0" flowable:targetDockerY="79.0">
+                <omgdi:waypoint x="410.0" y="360.0"></omgdi:waypoint>
+                <omgdi:waypoint x="410.0" y="279.95000000000005"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>
